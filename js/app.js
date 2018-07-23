@@ -6,6 +6,14 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+
+    // Set the X position of the Enemy
+    // Since the enemies will start on the left, the X should be 0
+    this.x = 0;
+    // Set the Y position of the enemy
+    // Since the enemies will be on three rows, we should limit the
+    // position of Y to be one of three rows.
+    this.y = 0;
 };
 
 // Update the enemy's position, required method for game
@@ -24,7 +32,10 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
+var Player = function() {
+  // The image/sprite for our character
+  this.sprite = 'images/char-boy.png'
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
