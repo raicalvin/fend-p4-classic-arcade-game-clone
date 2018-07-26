@@ -41,11 +41,22 @@ let Player = class {
   }
 }
 
-Player.prototype.update = function() {};
+// update(), render(), and handleInput() methods
+Player.prototype.update = function(dir, dist) {
+  if (dir === 'left') {
+    this.x -= dist;
+  } else if (dir === 'right') {
+    this.x += dist;
+  }
+};
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-Player.prototype.handleInput = function() {};
+Player.prototype.handleInput = function(keyCode) {
+  if (!(keyCode === 'left' && this.x - 101 < 0)) {
+    player.update(keyCode, 101);
+  }
+};
 
 
 
