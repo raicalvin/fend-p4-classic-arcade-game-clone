@@ -36,8 +36,9 @@ let Player = class {
   constructor() {
     // The image/sprite for our character
     this.sprite = 'images/char-boy.png';
-    this.x = 0;
-    this.y = 0;
+    this.x = 202;
+    this.y = 373.5;
+    this.reachedWater = false;
   }
 }
 
@@ -47,15 +48,34 @@ Player.prototype.update = function(dir, dist) {
     this.x -= dist;
   } else if (dir === 'right') {
     this.x += dist;
+  } else if (dir === 'up') {
+    this.y -= dist;
+  } else if (dir === 'down') {
+    this.y += 83;
   }
 };
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 Player.prototype.handleInput = function(keyCode) {
-  if (!(keyCode === 'left' && this.x - 101 < 0)) {
+  if (keyCode === 'left' && !(this.x - 101 == -101)) {
     player.update(keyCode, 101);
   }
+  if (keyCode === 'right' && !(this.x + 101 == 505)) {
+    player.update(keyCode, 101);
+  }
+  if (keyCode === 'up' && !(this.y - 83 == -124.5)) {
+    player.update(keyCode, 83);
+  }
+  if (keyCode === 'down' && !(this.y + 83 == 456.5)) {
+    player.update(keyCode, 101);
+  }
+  console.log(this.x, this.y);
+  if (this.y < 0) {
+    this.reachedWater = true;
+    console.log('reached watter!')
+  }
+
 };
 
 
