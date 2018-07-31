@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(enemyName, xPos, yPos) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -9,25 +9,49 @@ var Enemy = function() {
 
     // Set the X position of the Enemy
     // Since the enemies will start on the left, the X should be 0
-    this.x = 0;
+    this.x = xPos;
     // Set the Y position of the enemy
     // Since the enemies will be on three rows, we should limit the
     // position of Y to be one of three rows.
-    this.y = 0;
+    this.y = yPos;
+
+    // This is the enemy name to keep track of
+    this.name = enemyName;
+
+    console.log(this);
 };
+
+let speedFactor = getRandomEnemySpeedFactor();
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
+
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += speedFactor * dt;
+
+    if (this.x > 606) {
+      this.x = -101;
+      speedFactor = getRandomEnemySpeedFactor();
+      console.log('random speed factor: ' + speedFactor);
+      console.log(this)
+    }
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+// HELPER FUNCTIONS
+// ===========================================================================
+// Tihs will pick a random speed factor between 100 and 250, inclusive
+function getRandomEnemySpeedFactor() {
+  return Math.floor(Math.random() * (250 - 100)) + 100;
+}
+// ===========================================================================
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -36,8 +60,8 @@ let Player = class {
   constructor() {
     // The image/sprite for our character
     this.sprite = 'images/char-boy.png';
-    this.x = 202;
-    this.y = 373.5;
+    this.x = colCoords[3];
+    this.y = rowCoords[4];
     this.reachedWater = false;
   }
 }
@@ -78,11 +102,17 @@ Player.prototype.handleInput = function(keyCode) {
 
 };
 
-
+// Values defining board geometry
+let rowCoords = [-41.5, 124.5, 207.5, 290.5, 373.5]; // ROW Coordinates
+let colCoords = [-101, 0, 101, 202, 303, 404];       // COL Coordinates
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-var allEnemies = [];
+var allEnemies = [
+  new Enemy('enemy1', colCoords[0], rowCoords[2]),
+  new Enemy('enemy2', colCoords[1], rowCoords[3]),
+  new Enemy('enemy3', colCoords[1], rowCoords[1])
+];
 // Place the player object in a variable called player
 var player = new Player();
 
