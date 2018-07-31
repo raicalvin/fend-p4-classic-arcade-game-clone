@@ -18,26 +18,21 @@ var Enemy = function(enemyName, xPos, yPos) {
     // This is the enemy name to keep track of
     this.name = enemyName;
 
+    this.velocity = getRandomEnemySpeedFactor();
+
     console.log(this);
 };
-
-let speedFactor = getRandomEnemySpeedFactor();
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x += speedFactor * dt;
 
-    if (this.x > 606) {
-      this.x = -101;
-      speedFactor = getRandomEnemySpeedFactor();
-      console.log('random speed factor: ' + speedFactor);
-      console.log(this)
-    }
+    this.x += this.velocity * dt;
+
+
 };
 
 // Draw the enemy on the screen, required method for game
