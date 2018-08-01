@@ -16,7 +16,7 @@ This project was built for my Front End Nanodegree from Udacity. The project foc
 
 The gameboard itself was created using provided assets for the board pieces, player object, and enemy objects. A small score-tracker is present below the game board to count how many times the player successfully completes a round.
 
-![](http://placekitten.com/300/200)
+![](https://github.com/raicalvin/pictures/blob/master/pix-fend-p4-class-arcade-game/pic1.png)
 
 ## Getting Started
 
