@@ -1,3 +1,5 @@
+
+
 // Enemies our player must avoid
 var Enemy = function(enemyName, xPos, yPos) {
     // Variables applied to each of our instances go here,
@@ -18,9 +20,9 @@ var Enemy = function(enemyName, xPos, yPos) {
     // This is the enemy name to keep track of
     this.name = enemyName;
 
+    // Obtain a random speed factor to be used
     this.velocity = getRandomEnemySpeedFactor();
 
-    console.log(this);
 };
 
 // Update the enemy's position, required method for game
@@ -52,6 +54,11 @@ function getRandomEnemySpeedFactor() {
 function resetPlayer(player) {
   player.y = rowCoords[5];
 }
+// This function updates the player score every time it reaches the river
+function updateScore(player) {
+  let subScore = document.getElementsByClassName('sub-score-count')[0];
+  subScore.innerText = player.timesMadeToRiver;
+}
 // ===========================================================================
 
 // Now write your own player class
@@ -65,6 +72,7 @@ let Player = class {
     this.y = rowCoords[5];
     this.reachedWater = false;
     this.touchedEnemy = false;
+    this.timesMadeToRiver = 0;
   }
 }
 
@@ -113,6 +121,11 @@ Player.prototype.handleInput = function(keyCode) {
   console.log(this.x, this.y);
   if (this.y < 0) {
     this.reachedWater = true;
+    if (this.reachedWater) {
+      this.timesMadeToRiver += 1;
+      resetPlayer(this);
+      updateScore(this);
+    }
     console.log('reached watter!')
   }
 

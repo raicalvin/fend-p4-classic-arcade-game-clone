@@ -3,6 +3,10 @@ body {
     font-family: 'Assistant', sans-serif;
 }
 
+.main-container {
+  margin-bottom: 24px;
+}
+
 .container {
   background-color: #5FC148;
   width: 505px;
