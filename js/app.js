@@ -22,7 +22,6 @@ var Enemy = function(enemyName, xPos, yPos) {
 
     // Obtain a random speed factor to be used
     this.velocity = getRandomEnemySpeedFactor();
-
 };
 
 // Update the enemy's position, required method for game
@@ -36,7 +35,6 @@ Enemy.prototype.update = function(dt) {
       this.x = colCoords[0];
       this.velocity = getRandomEnemySpeedFactor();
     }
-
 };
 
 // Draw the enemy on the screen, required method for game
@@ -53,6 +51,7 @@ function getRandomEnemySpeedFactor() {
 // This function will reset the player back to the starting position
 function resetPlayer(player) {
   player.y = rowCoords[5];
+  this.reachedWater = false;
 }
 // This function updates the player score every time it reaches the river
 function updateScore(player) {
