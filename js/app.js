@@ -31,7 +31,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x += this.velocity * dt;
     if (this.x > 606) {
-      this.x = -101;
+      this.x = colCoords[0];
       this.velocity = getRandomEnemySpeedFactor();
     }
 
@@ -60,6 +60,7 @@ let Player = class {
     this.x = colCoords[3];
     this.y = rowCoords[4];
     this.reachedWater = false;
+    this.touchedEnemy = false;
   }
 }
 
@@ -74,6 +75,20 @@ Player.prototype.update = function(dir, dist) {
   } else if (dir === 'down') {
     this.y += 83;
   }
+
+  // Loop through every enemy and check to see matching coordindates
+  for (let i = 0; i < allEnemies.length; i++) {
+    let enemeyToCheck = allEnemies[i];
+    let xCoordOfEnemy = enemeyToCheck.x;
+    let xCoordOfPlayer = this.x;
+    let diffBetweenPlayerAndEnemy = Math.abs(xCoordOfEnemy - xCoordOfPlayer);
+    this.touchedEnemy = this.y == enemeyToCheck.y && diffBetweenPlayerAndEnemy < 30;
+    if (this.touchedEnemy) {
+      console.log('You touched an enemy!');
+      this.y
+    }
+  }
+
 };
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -100,15 +115,15 @@ Player.prototype.handleInput = function(keyCode) {
 };
 
 // Values defining board geometry
-let rowCoords = [-41.5, 124.5, 207.5, 290.5, 373.5]; // ROW Coordinates
+let rowCoords = [-41.5, 41.5, 124.5, 207.5, 290.5, 373.5]; // ROW Coordinates
 let colCoords = [-101, 0, 101, 202, 303, 404];       // COL Coordinates
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [
-  new Enemy('enemy1', colCoords[0], rowCoords[2]),
-  new Enemy('enemy2', colCoords[1], rowCoords[3]),
-  new Enemy('enemy3', colCoords[1], rowCoords[1])
+  new Enemy('enemy1', colCoords[0], rowCoords[1]),
+  new Enemy('enemy2', colCoords[0], rowCoords[2]),
+  new Enemy('enemy3', colCoords[0], rowCoords[3])
 ];
 // Place the player object in a variable called player
 var player = new Player();
