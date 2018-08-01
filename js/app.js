@@ -44,9 +44,13 @@ Enemy.prototype.render = function() {
 
 // HELPER FUNCTIONS
 // ===========================================================================
-// Tihs will pick a random speed factor between 100 and 250, inclusive
+// This will pick a random speed factor between 100 and 250, inclusive
 function getRandomEnemySpeedFactor() {
   return Math.floor(Math.random() * (250 - 100)) + 100;
+}
+// This function will reset the player back to the starting position
+function resetPlayer(player) {
+  player.y = rowCoords[5];
 }
 // ===========================================================================
 
@@ -57,8 +61,8 @@ let Player = class {
   constructor() {
     // The image/sprite for our character
     this.sprite = 'images/char-boy.png';
-    this.x = colCoords[3];
-    this.y = rowCoords[4];
+    this.x = colCoords[6];
+    this.y = rowCoords[5];
     this.reachedWater = false;
     this.touchedEnemy = false;
   }
@@ -85,7 +89,7 @@ Player.prototype.update = function(dir, dist) {
     this.touchedEnemy = this.y == enemeyToCheck.y && diffBetweenPlayerAndEnemy < 30;
     if (this.touchedEnemy) {
       console.log('You touched an enemy!');
-      this.y
+      resetPlayer(this)
     }
   }
 
@@ -116,13 +120,16 @@ Player.prototype.handleInput = function(keyCode) {
 
 // Values defining board geometry
 let rowCoords = [-41.5, 41.5, 124.5, 207.5, 290.5, 373.5]; // ROW Coordinates
-let colCoords = [-101, 0, 101, 202, 303, 404];       // COL Coordinates
+let colCoords = [-404, -303, -202, -101, 0, 101, 202, 303, 404];       // COL Coordinates
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [
-  new Enemy('enemy1', colCoords[0], rowCoords[1]),
-  new Enemy('enemy2', colCoords[0], rowCoords[2]),
+  new Enemy('enemy1', colCoords[3], rowCoords[1]),
+  new Enemy('enemy2', colCoords[3], rowCoords[2]),
+  new Enemy('enemy3', colCoords[3], rowCoords[3]),
+  new Enemy('enemy3', colCoords[0], rowCoords[1]),
+  new Enemy('enemy3', colCoords[0], rowCoords[2]),
   new Enemy('enemy3', colCoords[0], rowCoords[3])
 ];
 // Place the player object in a variable called player
