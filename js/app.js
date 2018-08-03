@@ -1,4 +1,4 @@
-
+//'use strict';
 
 // Enemies our player must avoid
 var Enemy = function(enemyName, xPos, yPos) {
@@ -21,7 +21,7 @@ var Enemy = function(enemyName, xPos, yPos) {
     this.name = enemyName;
 
     // Obtain a random speed factor to be used
-    this.velocity = getRandomEnemySpeedFactor();
+    this.velocity = this.getRandomEnemySpeedFactor();
 };
 
 // Update the enemy's position, required method for game
@@ -33,7 +33,7 @@ Enemy.prototype.update = function(dt) {
     this.x += this.velocity * dt;
     if (this.x > 606) {
       this.x = colCoords[0];
-      this.velocity = getRandomEnemySpeedFactor();
+      this.velocity = this.getRandomEnemySpeedFactor();
     }
 };
 
@@ -42,23 +42,10 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// HELPER FUNCTIONS
-// ===========================================================================
-// This will pick a random speed factor between 100 and 250, inclusive
-function getRandomEnemySpeedFactor() {
+Enemy.prototype.getRandomEnemySpeedFactor = function() {
+  // This will pick a random speed factor between 100 and 250, inclusive
   return Math.floor(Math.random() * (250 - 100)) + 100;
 }
-// This function will reset the player back to the starting position
-function resetPlayer(player) {
-  player.y = rowCoords[5];
-  this.reachedWater = false;
-}
-// This function updates the player score every time it reaches the river
-function updateScore(player) {
-  let subScore = document.getElementsByClassName('sub-score-count')[0];
-  subScore.innerText = player.timesMadeToRiver;
-}
-// ===========================================================================
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -73,6 +60,12 @@ let Player = class {
     this.touchedEnemy = false;
     this.timesMadeToRiver = 0;
   }
+}
+
+Player.prototype.updateScore = function(player) {
+  // This function updates the player score every time it reaches the river
+  let subScore = document.getElementsByClassName('sub-score-count')[0];
+  subScore.innerText = player.timesMadeToRiver;
 }
 
 // update(), render(), and handleInput() methods
@@ -96,14 +89,22 @@ Player.prototype.update = function(dir, dist) {
     this.touchedEnemy = this.y == enemeyToCheck.y && diffBetweenPlayerAndEnemy < 30;
     if (this.touchedEnemy) {
       console.log('You touched an enemy!');
-      resetPlayer(this)
+      Player.prototype.resetPlayer(this)
     }
   }
 
 };
+
+Player.prototype.resetPlayer = function(player) {
+  // This function will reset the player back to the starting position
+  player.y = rowCoords[5];
+  this.reachedWater = false;
+}
+
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
 Player.prototype.handleInput = function(keyCode) {
   if (keyCode === 'left' && !(this.x - 101 == -101)) {
     player.update(keyCode, 101);
@@ -122,13 +123,14 @@ Player.prototype.handleInput = function(keyCode) {
     this.reachedWater = true;
     if (this.reachedWater) {
       this.timesMadeToRiver += 1;
-      resetPlayer(this);
-      updateScore(this);
+      Player.prototype.resetPlayer(this);
+      this.updateScore(this);
     }
     console.log('reached watter!')
   }
 
 };
+
 
 // Values defining board geometry
 let rowCoords = [-41.5, 41.5, 124.5, 207.5, 290.5, 373.5]; // ROW Coordinates
