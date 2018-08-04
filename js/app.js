@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 // Enemies our player must avoid
 var Enemy = function(enemyName, xPos, yPos) {
@@ -62,7 +62,7 @@ let Player = class {
   }
 }
 
-Player.prototype.updateScore = function(player) {
+Player.prototype.updateScore = function() {
   // This function updates the player score every time it reaches the river
   let subScore = document.getElementsByClassName('sub-score-count')[0];
   subScore.innerText = player.timesMadeToRiver;
@@ -89,16 +89,16 @@ Player.prototype.update = function(dir, dist) {
     this.touchedEnemy = this.y == enemeyToCheck.y && diffBetweenPlayerAndEnemy < 75;
     if (this.touchedEnemy) {
       console.log('You touched an enemy!');
-      Player.prototype.resetPlayer(this)
+      //Player.prototype.resetPlayer(this);
+      this.resetPlayer();
     }
   }
 
 };
 
-Player.prototype.resetPlayer = function(player) {
+Player.prototype.resetPlayer = function() {
   // This function will reset the player back to the starting position
-  player.y = rowCoords[5];
-  this.reachedWater = false;
+  this.y = rowCoords[5];
 }
 
 Player.prototype.render = function() {
@@ -107,26 +107,26 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(keyCode) {
   if (keyCode === 'left' && !(this.x - 101 == -101)) {
-    player.update(keyCode, 101);
+    this.update(keyCode, 101);
   }
   if (keyCode === 'right' && !(this.x + 101 == 505)) {
-    player.update(keyCode, 101);
+    this.update(keyCode, 101);
   }
   if (keyCode === 'up' && !(this.y - 83 == -124.5)) {
-    player.update(keyCode, 83);
+    this.update(keyCode, 83);
   }
   if (keyCode === 'down' && !(this.y + 83 == 456.5)) {
-    player.update(keyCode, 101);
+    this.update(keyCode, 101);
   }
   console.log(this.x, this.y);
   if (this.y < 0) {
     this.reachedWater = true;
     if (this.reachedWater) {
       this.timesMadeToRiver += 1;
-      Player.prototype.resetPlayer(this);
-      this.updateScore(this);
+      this.resetPlayer();
+      this.updateScore();
     }
-    console.log('reached watter!')
+    console.log('reached watter!');
   }
 
 };
