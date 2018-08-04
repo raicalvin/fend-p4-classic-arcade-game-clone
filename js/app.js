@@ -86,7 +86,7 @@ Player.prototype.update = function(dir, dist) {
     let xCoordOfEnemy = enemeyToCheck.x;
     let xCoordOfPlayer = this.x;
     let diffBetweenPlayerAndEnemy = Math.abs(xCoordOfEnemy - xCoordOfPlayer);
-    this.touchedEnemy = this.y == enemeyToCheck.y && diffBetweenPlayerAndEnemy < 30;
+    this.touchedEnemy = this.y == enemeyToCheck.y && diffBetweenPlayerAndEnemy < 75;
     if (this.touchedEnemy) {
       console.log('You touched an enemy!');
       Player.prototype.resetPlayer(this)
