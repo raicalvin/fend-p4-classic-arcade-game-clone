@@ -33,5 +33,5 @@ body {
 .half-container-right {
   justify-content: flex-end;
   padding-right: 25px;
-    align-items: center;
+  align-items: center;
 }
