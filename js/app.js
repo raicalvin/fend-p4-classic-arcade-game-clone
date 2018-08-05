@@ -65,7 +65,7 @@ let Player = class {
 Player.prototype.updateScore = function() {
   // This function updates the player score every time it reaches the river
   let subScore = document.getElementsByClassName('sub-score-count')[0];
-  subScore.innerText = player.timesMadeToRiver;
+  subScore.innerText = this.timesMadeToRiver;
 }
 
 // update(), render(), and handleInput() methods
